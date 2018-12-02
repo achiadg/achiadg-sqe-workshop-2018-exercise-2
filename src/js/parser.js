@@ -24,7 +24,7 @@ function iterateBodyStatement(expression, elements, alternateIf) {
     if (expression.type === 'FunctionDeclaration')
         extractFunctionDeclaration(expression, elements);
     else if (expression.type === 'BlockStatement')
-        restrictElements(expression.body, elements);
+        restrictElements(expression, elements);
     else if (expression.type === 'VariableDeclaration')
         extractVariableDeclaration(expression, elements);
     else if (expression.type === 'ExpressionStatement')
@@ -117,7 +117,7 @@ function extractEveryDeclaration(declaration, elements) {
             type: 'variable declaration',
             name: declaration.id.name,
             condition: '',
-            value: declaration.init.value
+            value: extractValuesFromExpression(declaration.init)
         });
     } else {
         elements.push({
@@ -142,7 +142,7 @@ function extractExpressionStatement(expression, elements) {
         typeOfStatement = 'expression statement';
     }
     else {
-        name = expression.expression.left.name;
+        name = extractValuesFromExpression(expression.expression.left);
         value = extractValuesFromExpression(expression.expression.right);
         typeOfStatement = 'assignment expression';
     }
