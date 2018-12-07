@@ -1,8 +1,9 @@
 import {parseCode} from './code-analyzer';
 import $ from 'jquery';
-import {createElementsResult , mapOfVars , mapOfVarsTemp} from './parser';
-import {substitution , evalStatements} from './substitutor';
+import {createElementsResult} from './parser';
+import {substitution , evalStatements,getChangesInLines} from './substitutor';
 import {parseArgs} from './params';
+import {processEvaluation} from './evaluationIf';
 
 
 $(document).ready(function () {
@@ -11,7 +12,9 @@ $(document).ready(function () {
         let parsedCode = parseCode(codeToParse);
         let elements = createElementsResult(parsedCode);
         let evaluation = evalStatements(elements);
+        let linesWithChangesFromElements = getChangesInLines(codeToParse,evaluation);
+        let stringToEval = substitution(evaluation,linesWithChangesFromElements);
         let argsValues = parseArgs($('#inputArgs').val());
-        let afterSubstitution = substitution(elements);
+        let indexesToColor = processEvaluation(stringToEval,argsValues,evaluation);
     });
 });
