@@ -8,6 +8,7 @@ var linesAfterChanges = [];
 var i = 0;
 
 function getChangesInLines(codeToParse,elements) {
+    linesAfterChanges = [];
     let lines = codeToParse.split('\n');
     let j = 0;
     while(j<lines.length){
@@ -121,7 +122,7 @@ function pushStatementBrackets(line , element) {
         }else{
             res = res + line.charAt(i);
             res = res + element.condition + ')';
-            res = res + brackets[brackets.length-1];
+            res = res + brackets[brackets.length-1] + '\n';
             i = line.length;
         }
     }
@@ -129,6 +130,7 @@ function pushStatementBrackets(line , element) {
 }
 
 function substitution(elements , lines) {
+    indexes = [];
     let functionElement = null;
     for(let element of elements){
         if(element.type === 'function declaration')

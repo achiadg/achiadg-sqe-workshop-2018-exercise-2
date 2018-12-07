@@ -18,6 +18,8 @@ function handleIfEval(mappingValueParams ,stringToEval,j,res) {
     let afterBrackets = brackets[0].split('(');
     let toEval = afterBrackets[afterBrackets.length-1];
     let stringToEvaluation = '';
+    if(mappingValueParams.length <= 0)
+        return [];
     for(let element of mappingValueParams){
         stringToEvaluation = stringToEvaluation + 'var ' + element.variable + ' = ' + element.value + ';\n';
     }
@@ -34,6 +36,8 @@ function handleIfEval(mappingValueParams ,stringToEval,j,res) {
 function mapParams(evaluation,argsValues) {
     let i = 0;
     let mappingValueParams = [];
+    if(argsValues[0] === '')
+        return mappingValueParams;
     for(let element of evaluation){
         if(element.type === 'variable declaration' && element.value === ''){
             mappingValueParams.push({variable: element.name , value: argsValues[i]});

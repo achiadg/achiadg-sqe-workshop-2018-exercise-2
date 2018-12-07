@@ -1,5 +1,3 @@
-/* eslint-disable max-lines-per-function */
-
 var elements = [];
 var mapOfVars = [];
 var mapOfVarsTemp = [];
@@ -140,8 +138,7 @@ function extractEveryDeclaration(declaration, elements) {
     if (declaration.init != null) {
         elements.push({
             sline: declaration.loc.start.line, eline: declaration.loc.end.line,
-            type: 'variable declaration',
-            name: declaration.id.name,
+            type: 'variable declaration', name: declaration.id.name,
             condition: '',
             value: extractValuesFromExpression(declaration.init)
         });
@@ -149,8 +146,7 @@ function extractEveryDeclaration(declaration, elements) {
     } else {
         elements.push({
             sline: declaration.loc.start.line, eline: declaration.loc.end.line,
-            type: 'variable declaration',
-            name: declaration.id.name,
+            type: 'variable declaration', name: declaration.id.name,
             condition: '',
             value: 'null'
         });
@@ -274,8 +270,7 @@ function extractEveryDeclarationIf(declaration, elements) {
     if (declaration.init != null) {
         elements.push({
             sline: declaration.loc.start.line, eline: declaration.loc.end.line,
-            type: 'variable declaration',
-            name: declaration.id.name,
+            type: 'variable declaration', name: declaration.id.name,
             condition: '',
             value: extractValuesFromExpressionIf(declaration.init)
         });
@@ -283,8 +278,7 @@ function extractEveryDeclarationIf(declaration, elements) {
     } else {
         elements.push({
             sline: declaration.loc.start.line, eline: declaration.loc.end.line,
-            type: 'variable declaration',
-            name: declaration.id.name,
+            type: 'variable declaration', name: declaration.id.name,
             condition: '',
             value: 'null'
         });
@@ -439,8 +433,7 @@ function extractEveryDeclarationWhile(declaration, elements) {
     if (declaration.init != null) {
         elements.push({
             sline: declaration.loc.start.line, eline: declaration.loc.end.line,
-            type: 'variable declaration',
-            name: declaration.id.name,
+            type: 'variable declaration', name: declaration.id.name,
             condition: '',
             value: extractValuesFromExpressionWhile(declaration.init)
         });
@@ -448,8 +441,7 @@ function extractEveryDeclarationWhile(declaration, elements) {
     } else {
         elements.push({
             sline: declaration.loc.start.line, eline: declaration.loc.end.line,
-            type: 'variable declaration',
-            name: declaration.id.name,
+            type: 'variable declaration', name: declaration.id.name,
             condition: '',
             value: 'null'
         });
