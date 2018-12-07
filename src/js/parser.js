@@ -1,30 +1,32 @@
 var elements = [];
 var mapOfVars = [];
 var mapOfVarsTemp = [];
+var mapOfParams = [];
 
 export {createElementsResult};
 export {elements , mapOfVars , mapOfVarsTemp};
 
 
-function createElementsResult(parsedCode) {
+function createElementsResult(parsedCode,argsValues) {
+    mapOfParams = [];
     elements = [];
-    restrictElements(parsedCode, elements);
+    restrictElements(parsedCode, elements,argsValues);
     return elements;
 }
 
 
-function restrictElements(parsedCode, elements) {
+function restrictElements(parsedCode, elements,argsValues) {
     let i;
     if (parsedCode != [] && parsedCode.body != undefined && parsedCode.body != null) {
         for (i = 0; i < parsedCode.body.length; i++) {
-            iterateBodyStatement(parsedCode.body[i], elements, false);
+            iterateBodyStatement(parsedCode.body[i], elements, false,argsValues);
         }
     }
 }
 
-function iterateBodyStatement(expression, elements, alternateIf) {
+function iterateBodyStatement(expression, elements, alternateIf,argsValues) {
     if (expression.type === 'FunctionDeclaration')
-        extractFunctionDeclaration(expression, elements);
+        extractFunctionDeclaration(expression, elements,argsValues);
     else if (expression.type === 'BlockStatement')
         restrictElements(expression, elements);
     else if (expression.type === 'VariableDeclaration')
@@ -108,7 +110,7 @@ function checkIfExistInMap(map , name) {
     return isExist;
 }
 
-function extractFunctionDeclaration(expression, elements) {
+function extractFunctionDeclaration(expression, elements,argsValues) {
     elements.push({
         sline: expression.id.loc.start.line, eline: expression.id.loc.end.line,
         type: 'function declaration',
@@ -124,8 +126,13 @@ function extractFunctionDeclaration(expression, elements) {
             condition: '',
             value: ''
         });
+        addToParamMap(argsValues,param.name,expression.params.indexOf(param));
     }
     restrictElements(expression.body, elements);
+}
+
+function addToParamMap(argsValues,name,index) {
+    mapOfParams.push({variable: name , value: argsValues[index]});
 }
 
 function extractVariableDeclaration(expression, elements) {
