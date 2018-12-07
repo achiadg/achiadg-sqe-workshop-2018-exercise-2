@@ -4,7 +4,7 @@ var mapOfVarsTemp = [];
 var mapOfParams = [];
 
 export {createElementsResult};
-export {elements , mapOfVars , mapOfVarsTemp};
+export {elements , mapOfVars , mapOfVarsTemp,mapOfParams};
 
 
 function createElementsResult(parsedCode,argsValues) {
