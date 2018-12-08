@@ -1,6 +1,6 @@
 export {substitution,  evalStatements,getChangesInLines,functionElement};
 
-import {mapOfVars} from './parser';
+import {mapOfVars,mapOfParams} from './parser';
 
 var indexes = [];
 var linesAfterChanges = [];
@@ -183,11 +183,21 @@ function findMinIndex() {
 function handleSubstitution(functionElement , lines, elements) {
     let min = findMinIndex();
     for(let element of elements){
-        if(element.type === 'variable declaration' || element.type === 'assignment expression'){
+        if(element.type === 'variable declaration' || (element.type === 'assignment expression' && !inParams(element.name))){
             lines = removeLocalLines(element , lines, functionElement,min);
         }
     }
     return lines;
+}
+
+function inParams(name){
+    let res = false;
+    for(let element of mapOfParams){
+        if(element.variable === name){
+            res = true;
+        }
+    }
+    return res;
 }
 
 function removeLocalLines(element , lines, functionElement,min) {
