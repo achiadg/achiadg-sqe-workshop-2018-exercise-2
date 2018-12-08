@@ -79,7 +79,25 @@ function extractValuesFromExpression(right) {
         return extractValuesFromExpression(right.object) + '[' + extractValuesFromExpression(right.property) + ']';
     else if (right.type === 'UnaryExpression')
         return right.operator + '' + extractValuesFromExpression(right.argument);
+    else
+        return extractValuesFromExpressionCont(right);
 }
+
+function extractValuesFromExpressionCont(right) {
+    let res = '';
+    if(right.type === 'ArrayExpression'){
+        res = '[';
+        for(let element of right.elements){
+            if(right.elements.indexOf(element) !== right.elements.length-1)
+                res = res + extractValuesFromExpression(element) + ',';
+            else
+                res = res + extractValuesFromExpression(element);
+        }
+        res = res + ']';
+    }
+    return res;
+}
+
 
 function checkType(right) {
     if (right.type === 'Literal')
@@ -303,6 +321,23 @@ function extractValuesFromExpressionIf(right) {
         return extractValuesFromExpressionIf(right.object) + '[' + extractValuesFromExpressionIf(right.property) + ']';
     else if (right.type === 'UnaryExpression')
         return right.operator + '' + extractValuesFromExpressionIf(right.argument);
+    else
+        return extractValuesFromExpressionIfCont(right);
+}
+
+function extractValuesFromExpressionIfCont(right) {
+    let res = '';
+    if(right.type === 'ArrayExpression'){
+        res = '[';
+        for(let element of right.elements){
+            if(right.elements.indexOf(element) !== right.elements.length-1)
+                res = res + extractValuesFromExpression(element) + ',';
+            else
+                res = res + extractValuesFromExpression(element);
+        }
+        res = res + ']';
+    }
+    return res;
 }
 
 function checkTypeIf(right) {
@@ -557,6 +592,23 @@ function extractValuesFromExpressionWhile(right) {
         return extractValuesFromExpressionWhile(right.object) + '[' + extractValuesFromExpressionWhile(right.property) + ']';
     else if (right.type === 'UnaryExpression')
         return right.operator + '' + extractValuesFromExpressionWhile(right.argument);
+    else
+        return extractValuesFromExpressionWhileCont(right);
+}
+
+function extractValuesFromExpressionWhileCont(right) {
+    let res = '';
+    if(right.type === 'ArrayExpression'){
+        res = '[';
+        for(let element of right.elements){
+            if(right.elements.indexOf(element) !== right.elements.length-1)
+                res = res + extractValuesFromExpression(element) + ',';
+            else
+                res = res + extractValuesFromExpression(element);
+        }
+        res = res + ']';
+    }
+    return res;
 }
 
 function checkTypeWhile(right) {

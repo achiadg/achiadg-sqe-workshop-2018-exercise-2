@@ -1,9 +1,10 @@
-export {substitution,  evalStatements,getChangesInLines};
+export {substitution,  evalStatements,getChangesInLines,functionElement};
 
 import {mapOfVars} from './parser';
 
 var indexes = [];
 var linesAfterChanges = [];
+var functionElement = null;
 
 var i = 0;
 
@@ -131,7 +132,7 @@ function pushStatementBrackets(line , element) {
 
 function substitution(elements , lines) {
     indexes = [];
-    let functionElement = null;
+    functionElement = null;
     for(let element of elements){
         if(element.type === 'function declaration')
             functionElement = element;

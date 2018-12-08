@@ -1,5 +1,6 @@
 export {processEvaluation};
 
+
 function processEvaluation(stringsToEval,argsValues,evaluation) {
     let mappingValueParams = mapParams(evaluation,argsValues);
     let res = [];
